@@ -1,0 +1,35 @@
+<button (click)="showAddUserForm()">მომხმარებლის დამატება <fa-icon [icon]="faUserPlus"></fa-icon></button>
+<div *ngIf="!showUserForm">
+  <ul class="users">
+    <li *ngFor="let user of employees" (click)="selectEmployee(user.id)" [class.selected]="user.id == selectedEmployee?.id">
+      <div>
+        <span class="badge">{{user.id}}</span>{{user.firstName + ' ' + user.lastName}}
+      </div>
+      <fa-icon (click)="deleteEmployee(user.id)" [icon]="faArchive"></fa-icon>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="selectedEmployee">
+  <app-employee-detail [employee]="selectedEmployee" (saveEvent)="save($event)"></app-employee-detail>
+</div>
+
+<div *ngIf="showUserForm">
+  <div style="margin-top: 20px">
+    <label for="user-name">სახელი: </label>
+    <input id="user-name" [(ngModel)]="employeeToAdd.firstName" placeholder="სახელი">
+  </div>
+  <div style="margin-top: 20px">
+    <label for="user-lastName">გვარი: </label>
+    <input id="user-lastName" [(ngModel)]="employeeToAdd.lastName" placeholder="სახელი">
+  </div>
+  <div style="margin-top: 20px">
+    <label for="user-position">პოზიცია: </label>
+    <input id="user-position" [(ngModel)]="employeeToAdd.positionName" placeholder="სახელი">
+  </div>
+  <div style="margin-top: 20px">
+    <label for="user-salary">ხელფასი: </label>
+    <input id="user-salary" type="number" [(ngModel)]="employeeToAdd.salary" placeholder="სახელი">
+  </div>
+  <button (click)="addUser()">შენახვა</button>
+</div>
